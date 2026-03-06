@@ -5,42 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Partigiana - Pizzaria Artesanal</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { margin: 0; background-color: #fdfdfd; color: #1a1a1a; scroll-behavior: smooth; }
-        header { background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; text-align: center; }
-        .logo-container { padding: 20px; }
-        .logo-text { font-size: 32px; font-weight: 900; color: #d32f2f; text-transform: uppercase; margin: 0; }
-        nav { display: flex; justify-content: center; background: #d32f2f; }
-        nav a { color: #fff; text-decoration: none; padding: 15px 20px; font-weight: 600; font-size: 13px; text-transform: uppercase; }
-        .container { max-width: 1100px; margin: auto; padding: 20px; }
+        /* OTIMIZAÇÃO DE CARREGAMENTO */
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #fdfdfd; color: #1a1a1a; scroll-behavior: smooth; line-height: 1.6; }
         
+        /* CABEÇALHO */
+        header { background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; }
+        .logo-container { padding: 15px; text-align: center; }
+        .logo-text { font-size: 28px; font-weight: 900; color: #d32f2f; text-transform: uppercase; letter-spacing: -1px; }
+        
+        nav { display: flex; justify-content: center; background: #d32f2f; overflow-x: auto; }
+        nav a { color: #fff; text-decoration: none; padding: 12px 15px; font-weight: 600; font-size: 12px; text-transform: uppercase; white-space: nowrap; }
+
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+
+        /* SEÇÃO SOBRE (RECUPERADA) */
+        .sobre-section { 
+            background: #fff; padding: 40px 20px; border-radius: 15px; margin: 20px 0; 
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; 
+        }
+        .sobre-content { max-width: 700px; margin: auto; font-size: 17px; color: #444; font-style: italic; }
+
         /* GRID DE PIZZAS */
-        h2 { text-align: center; margin: 40px 0; color: #2c3e50; }
-        .grid-pizzas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card-pizza { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; transition: 0.3s; border: 1px solid #eee; }
-        .card-pizza:hover { transform: translateY(-5px); }
-        .card-pizza img { width: 100%; height: 220px; object-fit: cover; background: #eee; }
-        .info-pizza { padding: 15px; text-align: center; }
+        h2 { text-align: center; margin: 40px 0 20px; color: #2c3e50; text-transform: uppercase; }
+        .grid-pizzas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         
-        /* MODAL */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; padding: 20px; backdrop-filter: blur(5px); }
-        .modal-content { background: #fff; max-width: 450px; margin: 20px auto; border-radius: 20px; overflow: hidden; position: relative; animation: pop 0.3s ease; }
-        @keyframes pop { from { transform: scale(0.9); } to { transform: scale(1); } }
-        .modal-content img { width: 100%; height: 300px; object-fit: cover; }
+        .card-pizza { 
+            background: #fff; border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #eee; 
+        }
+        /* placeholder cinza enquanto a foto não baixa */
+        .card-pizza img { 
+            width: 100%; height: 220px; object-fit: cover; 
+            background: #eee; display: block; 
+        }
+        .info-pizza { padding: 15px; text-align: center; font-weight: bold; font-size: 18px; }
+
+        /* MODAL / POP-UP */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; backdrop-filter: blur(5px); }
+        .modal-content { background: #fff; max-width: 450px; margin: 50px auto; border-radius: 20px; overflow: hidden; position: relative; width: 90%; }
+        .modal-content img { width: 100%; height: 280px; object-fit: cover; }
         .modal-body { padding: 25px; text-align: center; }
-        .close-btn { position: absolute; right: 20px; top: 10px; font-size: 40px; cursor: pointer; color: #fff; text-shadow: 0 2px 4px #000; }
-        .btn-pedir { display: block; background: #25d366; color: white; text-decoration: none; padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 20px; }
+        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 35px; color: #fff; cursor: pointer; z-index: 10; text-shadow: 0 0 5px #000; }
         
-        footer { background: #1a1a1a; color: #fff; padding: 40px; text-align: center; margin-top: 60px; }
+        .btn-pedir { 
+            display: block; background: #25d366; color: white; text-decoration: none; 
+            padding: 15px; border-radius: 10px; font-weight: bold; margin-top: 15px; 
+        }
+
+        footer { background: #1a1a1a; color: #fff; padding: 40px 20px; text-align: center; margin-top: 50px; }
+        
+        /* WHATSAPP FLUTUANTE */
+        .wpp-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: #fff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; }
     </style>
 </head>
 <body>
+
+<a href="https://wa.me/556198518628" class="wpp-float" target="_blank">🟢</a>
 
 <header>
     <div class="logo-container">
         <h1 class="logo-text">La Partigiana</h1>
     </div>
     <nav>
+        <a href="#sobre">Nossa História</a>
         <a href="#pizzas">Salgadas</a>
         <a href="#doces">Doces</a>
         <a href="#contato">Contato</a>
@@ -48,6 +76,13 @@
 </header>
 
 <div class="container">
+    <section id="sobre" class="sobre-section">
+        <h2 style="margin-top:0; font-size: 22px;">Pizzas & Jogos</h2>
+        <div class="sobre-content">
+            "Uma pizzaria artesanal que nasce dentro da Ludoteca para atender quem joga ali e, ao mesmo tempo, já preparada para atuar via delivery e crescer para um espaço próprio. Focamos em pizzas individuais, acessíveis e feitas com cuidado, combinando praticidade com qualidade."
+        </div>
+    </section>
+
     <section id="pizzas">
         <h2>Pizzas Salgadas</h2>
         <div class="grid-pizzas" id="lista-salgadas"></div>
@@ -64,46 +99,47 @@
         <span class="close-btn" onclick="fecharModal()">&times;</span>
         <img id="imgModal" src="">
         <div class="modal-body">
-            <h2 id="tituloModal" style="color: #d32f2f;"></h2>
-            <p id="descModal"></p>
+            <h2 id="tituloModal" style="color: #d32f2f; margin-bottom: 10px;"></h2>
+            <p id="descModal" style="color: #666;"></p>
             <a id="btnWhatsModal" href="#" target="_blank" class="btn-pedir">PEDIR NO WHATSAPP</a>
         </div>
     </div>
 </div>
 
 <footer id="contato">
+    <p><strong>La Partigiana</strong></p>
     <p>📍 CLS 208 BLOCO C LOJA 02 - Asa Sul, Brasília</p>
     <p>📞 61 9851-8628</p>
 </footer>
 
 <script>
-    // LISTA DE SABORES E FOTOS
-    // IMPORTANTE: Mude o nome das imagens abaixo para o nome exato que você subiu no GitHub!
+    // DADOS DAS PIZZAS
     const salgadas = [
-        {nome: 'Calabresa', img: 'calabresa.jpg', desc: 'Molho de tomate, Mussarela, Calabresa, Cebola'},
-        {nome: 'Marguerita com Pesto', img: 'marguerita.jpg', desc: 'Molho de tomate, Mussarela, Tomate, Pesto de Manjericão'},
-        {nome: 'Vegetariana', img: 'vegetariana.jpg', desc: 'Molho de tomate, Mussarela, Tomate, Pimentão, Cebola, Champignon, e Azeitona'},
-        {nome: '4 Queijos', img: '4queijos.jpg', desc: 'Molho de Tomate, Mussarela, Creme de Ricota, Gorgonzola, e Parmesão'},
-        {nome: 'Corn Bacon', img: 'cornbacon.jpg', desc: 'Molho de Tomate, Mussarela, Milho, e Bacon Defumado'},
-        {nome: 'Frango com Catupiry', img: 'frango.jpg', desc: 'Molho de Tomate, Mussarela, Frango Desfiado, e Catupiry'},
-        {nome: 'Peperoni', img: 'peperoni.jpg', desc: 'Molho de Tomate, Mussarela, Pepperoni'},
-        {nome: 'Abobrinha com Pesto', img: 'abobrinha.jpg', desc: 'Molho de Tomate, Mussarela, Abobrinha, e Pesto'},
-        {nome: 'Mussarela', img: 'mussarela.jpg', desc: 'Molho de Tomate, e Mussarela'}
+        {nome: 'Calabresa', img: 'calabresa.jpg', desc: 'Molho de tomate, Mussarela, Calabresa e Cebola'},
+        {nome: 'Marguerita com Pesto', img: 'marguerita.jpg', desc: 'Molho de tomate, Mussarela, Tomate e Pesto de Manjericão'},
+        {nome: 'Vegetariana', img: 'vegetariana.jpg', desc: 'Molho de tomate, Mussarela, Tomate, Pimentão, Cebola, Champignon e Azeitona'},
+        {nome: '4 Queijos', img: '4queijos.jpg', desc: 'Molho de Tomate, Mussarela, Creme de Ricota, Gorgonzola e Parmesão'},
+        {nome: 'Corn Bacon', img: 'cornbacon.jpg', desc: 'Molho de Tomate, Mussarela, Milho e Bacon Defumado'},
+        {nome: 'Frango com Catupiry', img: 'frango.jpg', desc: 'Molho de Tomate, Mussarela, Frango Desfiado e Catupiry'},
+        {nome: 'Peperoni', img: 'peperoni.jpg', desc: 'Molho de Tomate, Mussarela e Pepperoni'},
+        {nome: 'Abobrinha com Pesto', img: 'abobrinha.jpg', desc: 'Molho de Tomate, Mussarela, Abobrinha e Pesto'},
+        {nome: 'Mussarela', img: 'mussarela.jpg', desc: 'Molho de Tomate e Mussarela'}
     ];
 
     const doces = [
-        {nome: 'Banana', img: 'banana.jpg', desc: 'Mussarela, Banana, Açucar, e Canela'},
-        {nome: 'Creme de Avelã', img: 'creme-avela.jpg', desc: 'Creme de Avelã, Raspas de chocolate Meio Amargo'},
-        {nome: 'Churros', img: 'churros.jpg', desc: 'Doce de Leite, e Canela'}
+        {nome: 'Banana', img: 'banana.jpg', desc: 'Mussarela, Banana, Açucar e Canela'},
+        {nome: 'Creme de Avelã', img: 'creme-avela.jpg', desc: 'Creme de Avelã e Raspas de chocolate Meio Amargo'},
+        {nome: 'Churros', img: 'churros.jpg', desc: 'Doce de Leite e Canela'}
     ];
 
+    // FUNÇÃO PARA CRIAR OS CARDS COM LOADING OTIMIZADO
     function criarCards(lista, elementoId) {
         const container = document.getElementById(elementoId);
         lista.forEach(p => {
             container.innerHTML += `
                 <div class="card-pizza" onclick="abrirModal('${p.nome}', '${p.desc}', '${p.img}')">
-                    <img src="${p.img}" alt="${p.nome}" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+em+Breve'">
-                    <div class="info-pizza"><h3>${p.nome}</h3></div>
+                    <img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=La+Partigiana'">
+                    <div class="info-pizza">${p.nome}</div>
                 </div>
             `;
         });
@@ -116,12 +152,15 @@
         const msg = encodeURIComponent(`Olá! Quero pedir uma pizza de ${nome}.`);
         document.getElementById('btnWhatsModal').href = `https://wa.me/556198518628?text=${msg}`;
         document.getElementById('modalPizza').style.display = "block";
+        document.body.style.overflow = 'hidden';
     }
 
     function fecharModal() {
         document.getElementById('modalPizza').style.display = "none";
+        document.body.style.overflow = 'auto';
     }
 
+    // INICIALIZAÇÃO
     criarCards(salgadas, 'lista-salgadas');
     criarCards(doces, 'lista-doces');
 </script>
