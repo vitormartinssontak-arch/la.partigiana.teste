@@ -5,152 +5,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Partigiana - Pizza Artesanal, Espírito Popular</title>
     <style>
+        /* PALETA MIV: Vermelho #d32f2f | Preto #1a1a1a | Off-White #fdfdfd */
         :root {
             --vermelho: #d32f2f;
             --preto: #1a1a1a;
-            --branco-off: #ffffff;
+            --fundo: #fdfdfd;
         }
 
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
         
         body { 
-            background-color: var(--branco-off); 
+            background-color: var(--fundo); 
             color: var(--preto); 
             scroll-behavior: smooth; 
-            line-height: 1.5;
+            overflow-x: hidden;
             position: relative;
-            overflow-x: hidden; /* Evita que os ícones flutuantes criem barra de rolagem lateral */
         }
-        
-        /* --- ÍCONES FLUTUANTES NO BACKGROUND --- */
+
+        /* --- ÍCONES DA IDV: MAIORES, COLORIDOS E FLUTUANTES --- */
         .bg-icon {
             position: absolute;
-            z-index: -1; /* Fica atrás de todo o conteúdo */
-            opacity: 0.2; /* Transparência suave para não cansar a vista */
-            width: 150px; /* Tamanho maior conforme solicitado */
-            pointer-events: none; /* Garante que o usuário consiga clicar nas pizzas através deles */
+            z-index: 0;
+            opacity: 0.15; /* Um pouco mais visível para aparecer a cor */
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.05));
         }
 
-        /* Posicionamento espalhado */
-        .icon-hasteo { top: 150px; left: -30px; transform: rotate(-15deg); width: 180px; }
-        .icon-tomate-cereja { top: 800px; right: -40px; transform: rotate(20deg); width: 140px; }
-        .icon-tomate { top: 1600px; left: -20px; transform: rotate(10deg); width: 160px; }
-        .icon-banana { bottom: 300px; right: -30px; transform: rotate(-25deg); width: 150px; }
+        /* Posicionamento "Disputando o Centro" */
+        .icon-hasteo { top: 100px; left: 10%; width: 250px; transform: rotate(-10deg); }
+        .icon-tomate-cereja { top: 700px; right: 5%; width: 200px; transform: rotate(15deg); }
+        .icon-tomate { top: 1400px; left: 5%; width: 220px; transform: rotate(-12deg); }
+        .icon-banana { bottom: 400px; right: 10%; width: 230px; transform: rotate(20deg); }
 
         /* HEADER */
-        header { background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--preto); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(5px); }
-        .logo-container { padding: 20px; text-align: center; }
-        .logo-text { font-size: 30px; font-weight: 900; color: var(--preto); text-transform: uppercase; letter-spacing: -1px; }
-        .slogan { font-size: 10px; border-top: 1px solid #eee; display: inline-block; padding-top: 5px; margin-top: 5px; letter-spacing: 2px; text-transform: uppercase; color: var(--vermelho); font-weight: bold; }
+        header { background: rgba(255,255,255,0.9); border-bottom: 3px solid var(--preto); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+        .logo-container { padding: 25px; text-align: center; }
+        .logo-text { font-size: 34px; font-weight: 900; color: var(--preto); text-transform: uppercase; letter-spacing: -1.5px; line-height: 0.8; }
         
-        nav { display: flex; justify-content: center; border-top: 1px solid #f4f4f4; }
-        nav a { color: var(--preto); text-decoration: none; padding: 12px 15px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+        /* SLOGAN DIVIDIDO CONFORME MIV */
+        .slogan-box { margin-top: 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .slogan-item { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; padding: 2px 6px; }
+        .slogan-pizza { color: var(--vermelho); }
+        .slogan-artesanal { color: var(--preto); border: 1px solid var(--preto); }
+        .slogan-espirito { color: var(--vermelho); }
+        .slogan-popular { background: var(--preto); color: #fff; }
 
-        .container { max-width: 1000px; margin: auto; padding: 0 20px; position: relative; z-index: 1; }
+        nav { display: flex; justify-content: center; border-top: 1px solid #eee; margin-top: 15px; }
+        nav a { color: var(--preto); text-decoration: none; padding: 15px 20px; font-weight: 700; font-size: 12px; text-transform: uppercase; }
 
-        /* SEÇÕES */
-        .sobre-section { padding: 80px 0; text-align: center; }
-        .sobre-content { max-width: 650px; margin: auto; font-size: 19px; color: #333; line-height: 1.8; }
+        .container { max-width: 1000px; margin: auto; padding: 0 20px; position: relative; z-index: 10; }
+
+        /* SOBRE */
+        .sobre-section { padding: 100px 0; text-align: center; }
+        .sobre-content { max-width: 700px; margin: auto; font-size: 20px; font-weight: 500; line-height: 1.6; color: #222; }
         .sobre-content strong { color: var(--vermelho); font-weight: 900; }
 
-        h2 { text-align: center; margin: 40px 0 30px; text-transform: uppercase; letter-spacing: 3px; font-size: 22px; font-weight: 900; color: var(--preto); }
-        
-        /* CARDS DE PIZZA */
-        .grid-pizzas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px; }
-        .card-pizza { cursor: pointer; border: 1px solid #eee; transition: 0.3s; background: #fff; }
-        .card-pizza:hover { border-color: var(--vermelho); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .img-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; }
-        .card-pizza img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card-pizza:hover img { transform: scale(1.05); }
-        .info-pizza { padding: 15px; text-align: center; border-top: 1px solid #eee; }
-        .info-pizza h3 { font-size: 16px; text-transform: uppercase; font-weight: 900; }
+        /* GRID */
+        h2 { text-align: center; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 4px; font-size: 24px; font-weight: 900; position: relative; }
+        h2::after { content: ''; display: block; width: 40px; height: 4px; background: var(--vermelho); margin: 10px auto; }
+
+        .grid-pizzas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px; }
+        .card-pizza { cursor: pointer; background: #fff; border: 1px solid #eee; transition: 0.4s; }
+        .card-pizza:hover { border-color: var(--vermelho); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .img-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f0f0f0; }
+        .card-pizza img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .card-pizza:hover img { transform: scale(1.08); }
+        .info-pizza { padding: 20px; text-align: center; border-top: 1px solid #f4f4f4; }
+        .info-pizza h3 { font-size: 17px; text-transform: uppercase; font-weight: 900; color: var(--preto); }
 
         /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2000; overflow-y: auto; }
-        .modal-content { max-width: 500px; margin: auto; padding: 60px 20px; text-align: center; }
-        .modal-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 25px; border: 1px solid #eee; }
-        .close-btn { position: fixed; right: 25px; top: 20px; font-size: 45px; cursor: pointer; font-weight: 200; }
-        .btn-pedir { display: block; background: var(--vermelho); color: #fff; text-decoration: none; padding: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-top: 30px; }
+        .modal-content { max-width: 550px; margin: auto; padding: 60px 20px; text-align: center; }
+        .modal-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border: 2px solid var(--preto); }
+        .close-btn { position: fixed; right: 30px; top: 20px; font-size: 50px; cursor: pointer; font-weight: 200; }
+        .btn-pedir { display: block; background: var(--vermelho); color: #fff; text-decoration: none; padding: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-top: 40px; transition: 0.3s; }
+        .btn-pedir:hover { background: var(--preto); }
 
-        footer { background: var(--preto); color: #fff; padding: 80px 20px; text-align: center; margin-top: 100px; position: relative; }
-        .wpp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; }
+        footer { background: var(--preto); color: #fff; padding: 100px 20px; text-align: center; position: relative; }
+        .wpp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: #fff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; text-decoration: none; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 999; }
     </style>
 </head>
 <body>
 
-<img src="hasteo.png" class="bg-icon icon-hasteo" alt="">
-<img src="tomate cereja.png" class="bg-icon icon-tomate-cereja" alt="">
-<img src="tomate.png" class="bg-icon icon-tomate" alt="">
-<img src="banana.png" class="bg-icon icon-banana" alt="">
+    <img src="hasteo.png" class="bg-icon icon-hasteo" alt="">
+    <img src="tomate cereja.png" class="bg-icon icon-tomate-cereja" alt="">
+    <img src="tomate.png" class="bg-icon icon-tomate" alt="">
+    <img src="banana.png" class="bg-icon icon-banana" alt="">
 
-<a href="https://wa.me/556198518628" class="wpp-float" target="_blank">🟢</a>
+    <a href="https://wa.me/556198518628" class="wpp-float" target="_blank">🟢</a>
 
-<header>
-    <div class="logo-container">
-        <div class="logo-text">La Partigiana</div>
-        <div class="slogan">Pizza Artesanal • Espírito Popular</div>
-    </div>
-    <nav>
-        <a href="#sobre">A Origem</a>
-        <a href="#pizzas">Salgadas</a>
-        <a href="#doces">Doces</a>
-    </nav>
-</header>
-
-<div class="container">
-    
-    <section id="sobre" class="sobre-section">
-        <div class="sobre-content">
-            La Partigiana nasce em Brasília com uma ideia simples: pizza boa de verdade, sem ser luxo. 
-            Massa artesanal, <strong>fermentada com tempo</strong> e espírito urbano. 
-            Qualidade não precisa ser exclusiva.
+    <header>
+        <div class="logo-container">
+            <div class="logo-text">La Partigiana</div>
+            <div class="slogan-box">
+                <span class="slogan-item slogan-pizza">Pizza</span>
+                <span class="slogan-item slogan-artesanal">Artesanal</span>
+                <span class="slogan-item slogan-espirito">Espírito</span>
+                <span class="slogan-item slogan-popular">Popular</span>
+            </div>
         </div>
-    </section>
+        <nav>
+            <a href="#sobre">A Pizzaria</a>
+            <a href="#pizzas">Salgadas</a>
+            <a href="#doces">Doces</a>
+        </nav>
+    </header>
 
-    <section id="pizzas">
-        <h2>Pizzas Salgadas</h2>
-        <div class="grid-pizzas" id="lista-salgadas"></div>
-    </section>
+    <div class="container">
+        
+        <section id="sobre" class="sobre-section">
+            <div class="sobre-content">
+                La Partigiana nasce em Brasília com uma ideia simples: <strong>pizza boa de verdade</strong>, sem ser um luxo distante. 
+                Nossa aposta é no essencial: massa feita à mão, aberta no gesto e assada com atenção. 
+                Espírito urbano, preço justo e <strong>qualidade artesanal</strong>.
+            </div>
+        </section>
 
-    <section id="doces">
-        <h2>Pizzas Doces</h2>
-        <div class="grid-pizzas" id="lista-doces"></div>
-    </section>
-</div>
+        <section id="pizzas">
+            <h2>Pizzas Salgadas</h2>
+            <div class="grid-pizzas" id="lista-salgadas"></div>
+        </section>
 
-<div id="modalPizza" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="fecharModal()">×</span>
-        <img id="imgModal" class="modal-img" src="">
-        <h2 id="tituloModal" style="text-transform: uppercase;"></h2>
-        <p id="descModal" style="margin-top: 15px; color: #444;"></p>
-        <a id="btnWhatsModal" href="#" target="_blank" class="btn-pedir">Fazer Pedido</a>
+        <section id="doces" style="margin-top: 80px;">
+            <h2>Pizzas Doces</h2>
+            <div class="grid-pizzas" id="lista-doces"></div>
+        </section>
     </div>
-</div>
 
-<footer>
-    <p style="font-weight: 900; margin-bottom: 10px;">LA PARTIGIANA</p>
-    <p>📍 CLS 208 BLOCO C LOJA 02 - Asa Sul, Brasília</p>
-    <p>📞 61 9851-8628</p>
-</footer>
+    <div id="modalPizza" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="fecharModal()">×</span>
+            <img id="imgModal" class="modal-img" src="">
+            <h2 id="tituloModal" style="margin-top: 20px;"></h2>
+            <p id="descModal" style="margin-top: 20px; color: #444; font-size: 18px;"></p>
+            <a id="btnWhatsModal" href="#" target="_blank" class="btn-pedir">Pedir Agora</a>
+        </div>
+    </div>
+
+    <footer>
+        <p style="font-weight: 900; font-size: 24px; letter-spacing: -1px; margin-bottom: 15px;">LA PARTIGIANA</p>
+        <p>📍 CLS 208 BLOCO C LOJA 02 - Asa Sul, Brasília</p>
+        <p>📞 61 9851-8628</p>
+        <div style="margin-top: 40px; opacity: 0.3; font-size: 10px; letter-spacing: 5px;">EST. 2026</div>
+    </footer>
 
 <script>
+    // LISTA DE FOTOS (Ajustadas conforme os nomes que você subiu no GitHub)
     const salgadas = [
-        {nome: 'Calabresa', img: 'calabresa.jpeg', desc: 'Molho de tomate artesanal, muçarela, calabresa e cebola.'},
-        {nome: 'Marguerita com Pesto', img: 'marguerita.jpeg', desc: 'Molho de tomate, muçarela, tomate fresco e nosso pesto de manjericão.'},
-        {nome: 'Vegetariana', img: 'vegetariana.jpeg', desc: 'Molho de tomate, muçarela, tomate, pimentão, cebola, champignon e azeitona.'},
-        {nome: '4 Queijos', img: 'queijos.jpeg', desc: 'Muçarela, creme de ricota, gorgonzola e parmesão.'},
-        {nome: 'Corn Bacon', img: 'corn.jpeg', desc: 'Molho de tomate, muçarela, milho e bacon defumado.'},
-        {nome: 'Frango com Catupiry', img: 'frango.jpeg', desc: 'Frango desfiado temperado com o legítimo Catupiry.'},
-        {nome: 'Peperoni', img: 'pepperoni.jpeg', desc: 'Molho de tomate, muçarela e fatias de pepperoni.'},
-        {nome: 'Abobrinha com Pesto', img: 'abobrinha.jpeg', desc: 'Muçarela, lâminas de abobrinha e pesto artesanal.'},
-        {nome: 'Mussarela', img: 'mussarela.jpeg', desc: 'O clássico: molho de tomate artesanal e muçarela.'}
+        {nome: 'Calabresa', img: 'calabresa.jpeg', desc: 'Molho de tomate artesanal, muçarela, calabresa fatiada e cebola.'},
+        {nome: 'Marguerita com Pesto', img: 'marguerita.jpeg', desc: 'Mussarela de búfala, tomate cereja e o nosso premiado pesto de manjericão.'},
+        {nome: 'Vegetariana', img: 'vegetariana.jpeg', desc: 'Mix de legumes frescos: tomate, pimentão, cebola, champignon e azeitona.'},
+        {nome: '4 Queijos', img: '4queijos.jpeg', desc: 'Mussarela, Creme de Ricota, Gorgonzola e Parmesão ralado na hora.'},
+        {nome: 'Corn Bacon', img: 'cornbacon.jpeg', desc: 'Milho doce e fatias crocantes de bacon defumado.'},
+        {nome: 'Frango com Catupiry', img: 'frango.jpeg', desc: 'Frango desfiado suculento com o autêntico Catupiry.'},
+        {nome: 'Peperoni', img: 'peperoni.jpeg', desc: 'Muçarela premium e rodelas de Pepperoni.'},
+        {nome: 'Abobrinha com Pesto', img: 'abobrinha.jpeg', desc: 'Lâminas finas de abobrinha temperadas e finalizadas com pesto.'},
+        {nome: 'Mussarela', img: 'mussarela.jpeg', desc: 'A base de tudo: molho de tomate da casa e muçarela de alta qualidade.'}
     ];
 
     const doces = [
-        {nome: 'Banana', img: 'banana.jpeg', desc: 'Muçarela, banana fatiada, açúcar e canela.'},
-        {nome: 'Creme de Avelã', img: 'creme.jpeg', desc: 'Creme de avelã com raspas de chocolate meio amargo.'},
-        {nome: 'Churros', img: 'churros.jpeg', desc: 'Doce de leite cremoso, açúcar e canela.'}
+        {nome: 'Banana', img: 'banana.jpeg', desc: 'Muçarela, banana fresca, açúcar e canela polvilhada.'},
+        {nome: 'Creme de Avelã', img: 'creme-avela.jpeg', desc: 'Creme de avelã Nutella e raspas de chocolate meio amargo.'},
+        {nome: 'Churros', img: 'churros.jpeg', desc: 'Doce de leite argentino, finalizado com açúcar e canela.'}
     ];
 
     function criarCards(lista, elementoId) {
@@ -158,7 +174,9 @@
         lista.forEach(p => {
             container.innerHTML += `
                 <div class="card-pizza" onclick="abrirModal('${p.nome}', '${p.desc}', '${p.img}')">
-                    <div class="img-box"><img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=La+Partigiana'"></div>
+                    <div class="img-box">
+                        <img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=La+Partigiana'">
+                    </div>
                     <div class="info-pizza"><h3>${p.nome}</h3></div>
                 </div>
             `;
@@ -186,4 +204,3 @@
 
 </body>
 </html>
-
