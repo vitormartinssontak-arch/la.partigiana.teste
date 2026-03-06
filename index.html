@@ -12,53 +12,76 @@
         }
 
         * { box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-        body { background-color: var(--branco-off); color: var(--preto); scroll-behavior: smooth; line-height: 1.5; }
         
+        body { 
+            background-color: var(--branco-off); 
+            color: var(--preto); 
+            scroll-behavior: smooth; 
+            line-height: 1.5;
+            position: relative;
+            overflow-x: hidden; /* Evita que os ícones flutuantes criem barra de rolagem lateral */
+        }
+        
+        /* --- ÍCONES FLUTUANTES NO BACKGROUND --- */
+        .bg-icon {
+            position: absolute;
+            z-index: -1; /* Fica atrás de todo o conteúdo */
+            opacity: 0.2; /* Transparência suave para não cansar a vista */
+            width: 150px; /* Tamanho maior conforme solicitado */
+            pointer-events: none; /* Garante que o usuário consiga clicar nas pizzas através deles */
+        }
+
+        /* Posicionamento espalhado */
+        .icon-hasteo { top: 150px; left: -30px; transform: rotate(-15deg); width: 180px; }
+        .icon-tomate-cereja { top: 800px; right: -40px; transform: rotate(20deg); width: 140px; }
+        .icon-tomate { top: 1600px; left: -20px; transform: rotate(10deg); width: 160px; }
+        .icon-banana { bottom: 300px; right: -30px; transform: rotate(-25deg); width: 150px; }
+
         /* HEADER */
-        header { background: #fff; border-bottom: 2px solid var(--preto); position: sticky; top: 0; z-index: 1000; }
+        header { background: rgba(255,255,255,0.95); border-bottom: 2px solid var(--preto); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(5px); }
         .logo-container { padding: 20px; text-align: center; }
         .logo-text { font-size: 30px; font-weight: 900; color: var(--preto); text-transform: uppercase; letter-spacing: -1px; }
         .slogan { font-size: 10px; border-top: 1px solid #eee; display: inline-block; padding-top: 5px; margin-top: 5px; letter-spacing: 2px; text-transform: uppercase; color: var(--vermelho); font-weight: bold; }
         
-        nav { display: flex; justify-content: center; border-top: 1px solid #f4f4f4; background: #fff; }
+        nav { display: flex; justify-content: center; border-top: 1px solid #f4f4f4; }
         nav a { color: var(--preto); text-decoration: none; padding: 12px 15px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* ÍCONES IDV - ESTILO ACESSÓRIO MIV */
-        .idv-icon { width: 35px; height: 35px; object-fit: contain; margin: 30px auto; display: block; filter: grayscale(100%); opacity: 0.6; transition: 0.3s; }
-        .idv-icon:hover { filter: grayscale(0%); opacity: 1; }
+        .container { max-width: 1000px; margin: auto; padding: 0 20px; position: relative; z-index: 1; }
 
-        .container { max-width: 1000px; margin: auto; padding: 0 20px; }
-
-        /* SEÇÃO SOBRE */
-        .sobre-section { padding: 40px 0; text-align: center; }
-        .sobre-content { max-width: 650px; margin: auto; font-size: 18px; font-weight: 400; color: #333; }
+        /* SEÇÕES */
+        .sobre-section { padding: 80px 0; text-align: center; }
+        .sobre-content { max-width: 650px; margin: auto; font-size: 19px; color: #333; line-height: 1.8; }
         .sobre-content strong { color: var(--vermelho); font-weight: 900; }
 
-        /* GRID DE PIZZAS */
-        h2 { text-align: center; margin: 40px 0 20px; text-transform: uppercase; letter-spacing: 2px; font-size: 18px; font-weight: 900; }
-        .grid-pizzas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        h2 { text-align: center; margin: 40px 0 30px; text-transform: uppercase; letter-spacing: 3px; font-size: 22px; font-weight: 900; color: var(--preto); }
         
-        .card-pizza { cursor: pointer; border: 1px solid #eee; transition: 0.3s; background: #fff; position: relative; }
-        .card-pizza:hover { border-color: var(--vermelho); transform: translateY(-3px); }
-        .img-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #f9f9f9; }
-        .card-pizza img { width: 100%; height: 100%; object-fit: cover; }
-        .info-pizza { padding: 15px; text-align: center; background: #fff; border-top: 1px solid #eee; }
-        .info-pizza h3 { font-size: 15px; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px; }
+        /* CARDS DE PIZZA */
+        .grid-pizzas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 50px; }
+        .card-pizza { cursor: pointer; border: 1px solid #eee; transition: 0.3s; background: #fff; }
+        .card-pizza:hover { border-color: var(--vermelho); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .img-box { width: 100%; aspect-ratio: 1/1; overflow: hidden; }
+        .card-pizza img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card-pizza:hover img { transform: scale(1.05); }
+        .info-pizza { padding: 15px; text-align: center; border-top: 1px solid #eee; }
+        .info-pizza h3 { font-size: 16px; text-transform: uppercase; font-weight: 900; }
 
-        /* MODAL FULLSCREEN ESTILO MIV */
+        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff; z-index: 2000; overflow-y: auto; }
         .modal-content { max-width: 500px; margin: auto; padding: 60px 20px; text-align: center; }
         .modal-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 25px; border: 1px solid #eee; }
-        .close-btn { position: fixed; right: 25px; top: 20px; font-size: 40px; cursor: pointer; font-weight: 200; color: var(--preto); }
-        .btn-pedir { display: block; background: var(--vermelho); color: #fff; text-decoration: none; padding: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-top: 30px; border-radius: 4px; }
+        .close-btn { position: fixed; right: 25px; top: 20px; font-size: 45px; cursor: pointer; font-weight: 200; }
+        .btn-pedir { display: block; background: var(--vermelho); color: #fff; text-decoration: none; padding: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-top: 30px; }
 
-        footer { background: var(--preto); color: #fff; padding: 60px 20px; text-align: center; margin-top: 80px; }
-        .footer-logo { font-weight: 900; font-size: 20px; margin-bottom: 20px; display: block; }
-
+        footer { background: var(--preto); color: #fff; padding: 80px 20px; text-align: center; margin-top: 100px; position: relative; }
         .wpp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; }
     </style>
 </head>
 <body>
+
+<img src="hasteo.png" class="bg-icon icon-hasteo" alt="">
+<img src="tomate cereja.png" class="bg-icon icon-tomate-cereja" alt="">
+<img src="tomate.png" class="bg-icon icon-tomate" alt="">
+<img src="banana.png" class="bg-icon icon-banana" alt="">
 
 <a href="https://wa.me/556198518628" class="wpp-float" target="_blank">🟢</a>
 
@@ -76,8 +99,6 @@
 
 <div class="container">
     
-    <img src="hasteo.png" class="idv-icon" alt="La Partigiana Icon">
-
     <section id="sobre" class="sobre-section">
         <div class="sobre-content">
             La Partigiana nasce em Brasília com uma ideia simples: pizza boa de verdade, sem ser luxo. 
@@ -86,42 +107,34 @@
         </div>
     </section>
 
-    <img src="tomate cereja.png" class="idv-icon" alt="La Partigiana Icon">
-
     <section id="pizzas">
         <h2>Pizzas Salgadas</h2>
         <div class="grid-pizzas" id="lista-salgadas"></div>
     </section>
 
-    <img src="tomate.png" class="idv-icon" alt="La Partigiana Icon">
-
     <section id="doces">
         <h2>Pizzas Doces</h2>
         <div class="grid-pizzas" id="lista-doces"></div>
     </section>
-
-    <img src="banana.png" class="idv-icon" alt="La Partigiana Icon">
 </div>
 
 <div id="modalPizza" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="fecharModal()">×</span>
         <img id="imgModal" class="modal-img" src="">
-        <h2 id="tituloModal" style="margin: 0; color: var(--preto); text-transform: uppercase;"></h2>
-        <p id="descModal" style="margin-top: 15px; color: #444; font-size: 16px;"></p>
+        <h2 id="tituloModal" style="text-transform: uppercase;"></h2>
+        <p id="descModal" style="margin-top: 15px; color: #444;"></p>
         <a id="btnWhatsModal" href="#" target="_blank" class="btn-pedir">Fazer Pedido</a>
     </div>
 </div>
 
 <footer>
-    <span class="footer-logo">LA PARTIGIANA</span>
+    <p style="font-weight: 900; margin-bottom: 10px;">LA PARTIGIANA</p>
     <p>📍 CLS 208 BLOCO C LOJA 02 - Asa Sul, Brasília</p>
     <p>📞 61 9851-8628</p>
-    <p style="font-size: 10px; margin-top: 30px; opacity: 0.5;">PIZZA ARTESANAL, ESPÍRITO POPULAR.</p>
 </footer>
 
 <script>
-    // LISTA DE FOTOS - Usei .jpeg baseado nas suas capturas de tela
     const salgadas = [
         {nome: 'Calabresa', img: 'calabresa.jpeg', desc: 'Molho de tomate artesanal, muçarela, calabresa e cebola.'},
         {nome: 'Marguerita com Pesto', img: 'marguerita.jpeg', desc: 'Molho de tomate, muçarela, tomate fresco e nosso pesto de manjericão.'},
@@ -145,9 +158,7 @@
         lista.forEach(p => {
             container.innerHTML += `
                 <div class="card-pizza" onclick="abrirModal('${p.nome}', '${p.desc}', '${p.img}')">
-                    <div class="img-box">
-                        <img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=La+Partigiana'">
-                    </div>
+                    <div class="img-box"><img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.src='https://via.placeholder.com/400?text=La+Partigiana'"></div>
                     <div class="info-pizza"><h3>${p.nome}</h3></div>
                 </div>
             `;
