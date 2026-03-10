@@ -37,18 +37,21 @@
         nav { display: flex; justify-content: center; border-top: 1px solid #eee; margin-top: 15px; }
         nav a { color: var(--preto); text-decoration: none; padding: 15px; font-weight: 700; font-size: 11px; text-transform: uppercase; }
 
-        /* IMAGEM DE TOPO */
-        .img-topo-container { width: 100%; max-width: 1000px; margin: 30px auto 0; padding: 0 20px; }
-        .img-topo { width: 100%; height: auto; border: 1px solid var(--preto); display: block; }
-
+        /* CONTAINER PRINCIPAL */
         .container { max-width: 1000px; margin: auto; padding: 0 20px; position: relative; z-index: 10; }
 
+        /* IMAGEM DE TOPO */
+        .img-topo-container { width: 100%; margin-top: 30px; }
+        .img-topo { width: 100%; height: auto; border: 1px solid var(--preto); display: block; }
+
+        /* SEÇÃO SOBRE */
         .sobre-section { padding: 50px 0 80px; text-align: center; }
         .sobre-content { max-width: 700px; margin: auto; font-size: 19px; line-height: 1.6; }
 
         h2 { text-align: center; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 4px; font-size: 22px; font-weight: 900; }
         h2::after { content: ''; display: block; width: 40px; height: 4px; background: var(--vermelho); margin: 12px auto; }
 
+        /* GRID PIZZAS */
         .grid-pizzas { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 60px; }
         .card-pizza { cursor: pointer; background: #fff; border: 1px solid #eee; transition: 0.3s; }
         .card-pizza:hover { border-color: var(--vermelho); transform: translateY(-5px); }
@@ -67,7 +70,7 @@
             background: #fff; width: 90%; max-width: 500px; margin: 20px auto; 
             padding: 40px 20px; text-align: center; position: relative;
         }
-        .modal-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 20px; }
+        .modal-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; margin-bottom: 20px; border: 1px solid #eee; }
         
         .btn-pedir { 
             display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -77,6 +80,7 @@
         }
         .btn-pedir img { width: 22px; filter: brightness(0) invert(1); }
 
+        /* WHATSAPP FLUTUANTE */
         .wpp-float { 
             position: fixed; bottom: 30px; right: 30px; background: #fff; 
             width: 60px; height: 60px; border-radius: 50%; display: flex; 
@@ -115,11 +119,11 @@
         </nav>
     </header>
 
-    <div class="img-topo-container">
-        <img src="Topo.png" class="img-topo" alt="La Partigiana - Pizza Artesanal">
-    </div>
-
     <div class="container">
+        <div class="img-topo-container">
+            <img src="Topo.png" class="img-topo" alt="La Partigiana">
+        </div>
+
         <section id="sobre" class="sobre-section">
             <div class="sobre-content">
                 La Partigiana nasce em Brasília: <strong>pizza boa de verdade</strong>, sem luxo distante. 
@@ -160,17 +164,17 @@
         {nome: 'Calabresa', img: 'calabresa.jpeg', desc: 'Molho de tomate, Mussarela, Calabresa, Cebola'},
         {nome: 'Marguerita com Pesto', img: 'marguerita.jpeg', desc: 'Molho de tomate, Mussarela, Tomate, Pesto de Manjericão'},
         {nome: 'Vegetariana', img: 'vegetariana.jpeg', desc: 'Molho de tomate, Mussarela, Tomate, Pimentão, Cebola, Champignon, e Azeitona'},
-        {nome: '4 Queijos', img: 'queijos.jpeg', desc: 'Molho de Tomate, Mussarela, Creme de Ricota, Gorgonzola, e Parmesão'},
-        {nome: 'Corn Bacon', img: 'corn.jpeg', desc: 'Molho de Tomate, Mussarela, Milho, e Bacon Defumado'},
+        {nome: '4 Queijos', img: '4queijos.jpeg', desc: 'Molho de Tomate, Mussarela, Creme de Ricota, Gorgonzola, e Parmesão'},
+        {nome: 'Corn Bacon', img: 'cornbacon.jpeg', desc: 'Molho de Tomate, Mussarela, Milho, e Bacon Defumado'},
         {nome: 'Frango com Catupiry', img: 'frango.jpeg', desc: 'Molho de Tomate, Mussarela, Frango Desfiado, e Catupiry'},
-        {nome: 'Peperoni', img: 'pepperoni.jpeg', desc: 'Molho de Tomate, Mussarela, Pepperoni'},
+        {nome: 'Peperoni', img: 'peperoni.jpeg', desc: 'Molho de Tomate, Mussarela, Pepperoni'},
         {nome: 'Abobrinha com Pesto', img: 'abobrinha.jpeg', desc: 'Molho de Tomate, Mussarela, Abobrinha, e Pesto'},
         {nome: 'Mussarela', img: 'mussarela.jpeg', desc: 'Molho de Tomate, e Mussarela'}
     ];
 
     const doces = [
         {nome: 'Banana', img: 'banana.jpeg', desc: 'Mussarela, Banana, Açucar, e Canela'},
-        {nome: 'Creme de Avelã', img: 'creme.jpeg', desc: 'Creme de Avelã, Raspas de chocolate Meio Amargo'},
+        {nome: 'Creme de Avelã', img: 'creme-avela.jpeg', desc: 'Creme de Avelã, Raspas de chocolate Meio Amargo'},
         {nome: 'Churros', img: 'churros.jpeg', desc: 'Doce de Leite, e Canela'}
     ];
 
@@ -184,26 +188,6 @@
                 </div>
             `;
         });
-    }
-
-    function abrirModal(e, nome, desc, img) {
-        e.stopPropagation(); // Impede o fechamento imediato ao abrir
-        document.getElementById('tituloModal').innerText = nome;
-        document.getElementById('descModal').innerText = desc;
-        document.getElementById('imgModal').src = img;
-        const msg = encodeURIComponent(Olá! Gostaria de pedir a pizza: ${nome});
-        document.getElementById('btnWhatsModal').href = https://wa.me/556198518628?text=${msg};
-        document.getElementById('modalPizza').style.display = "flex";
-        document.body.style.overflow = 'hidden';
-    }
-
-    function fecharModal(event) {
-        const modal = document.getElementById('modalPizza');
-        // Se clicar no fundo do modal (área escura), ele fecha
-        if (event.target === modal || !modal.contains(event.target)) {
-            modal.style.display = "none";
-            document.body.style.overflow = 'auto';
-        }
     }
 
     function abrirModal(e, nome, desc, img) {
